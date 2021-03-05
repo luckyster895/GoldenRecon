@@ -1,7 +1,8 @@
 import os
 import socket
 import time
-import re
+from colorama import Fore, Back, Style
+
 
 def argument(arg):
     switcher = {
@@ -41,9 +42,22 @@ else:
     print("Skipping Nmap Scan")
 
 #Finding subdomains and finding alive host
+print("**************Finding subdomain and alive host*****************")
 os.system("assetfinder --subs-only "+website+" >> all_host.txt")
 os.system("cat all_host.txt | httprobe >> alive_host.txt")
 
 #Checking for wordpress site
+print("***********Scanning website is Wordpress site or not***********")
 os.system("wpscan --stealthy --url "+website)
 
+#Firing up the Sqlmap
+print("Starting Sqlmap \n")
+print(Fore.RED + 'WARNING:Only use sqlmap for attacking with mutual consent with the site owner or company')
+print(Style.RESET_ALL)
+sql_start_stop=int(input("Sqlmap  \n1.Start \n2.Skip \nWant to continue with SqlMap:"))
+if(sql_start_stop == 1):
+    sql_level=int(input("Level of tests to perform (1-5) \nEnter the level of Sqlmap:"))
+    sql_site=input("Enter the endpoint where u want to test sql injection")
+    os.system("sqlmap -u "+sql_site+" --dbs --level="+sql_level)
+else:
+    print("Skipping Sqlmap")

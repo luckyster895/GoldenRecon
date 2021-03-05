@@ -11,7 +11,7 @@ apt_install()
     #Requirements installation
     eval $install_apt apt install python3 python3-pip python figlet ruby nokogiri 
     #Installing tools using apt install
-    eval $install_apt apt install nmap dirb curl shodan 
+    eval $install_apt apt install nmap dirb curl shodan sqlmap
 }
 
 go_install()
@@ -50,3 +50,7 @@ else:
         source ~/.bash_profile
     fi
 fi
+
+#Installing Python requirements 
+pip install requests colorama
+pip3 install requests colorama
